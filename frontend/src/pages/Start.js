@@ -1,8 +1,15 @@
-import React from "react";
-import Login from "./Login";
+import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogout } from "../slices/employeeSlice";
 
 const Start = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setLogout());
+  }, []);
+
   return (
     <>
       <div></div>

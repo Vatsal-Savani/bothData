@@ -1,9 +1,10 @@
 import React from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
 
-const WorkStatusChart = ({ data }) => {
+const WorkStatusChart = ({ data, title }) => {
   return (
     <div>
+      <div className="mb-6 fontFamily">{title}</div>
       <PieChart
         series={[
           {

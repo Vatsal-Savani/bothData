@@ -5,7 +5,7 @@ import {
   useGetGenderRatioQuery,
   useGetWorkStateRatioQuery,
 } from "../services/employees";
-import NewChart from "./NewChart";
+// import NewChart from "./common/NewChart";
 
 const Charts = () => {
   const { data: departmentData } = useGetDepartmentRatioQuery();
@@ -14,10 +14,25 @@ const Charts = () => {
 
   return (
     <>
-      <div>
-        <WorkStatusChart data={workStates ? workStates : []} />
-        <WorkStatusChart data={genderRatio ? genderRatio : []} />
-        <WorkStatusChart data={departmentData ? departmentData : []} />
+      <div className="allCharts">
+        <div className="chart">
+          <WorkStatusChart
+            title="WorkState Data"
+            data={workStates ? workStates : []}
+          />
+        </div>
+        <div className="chart">
+          <WorkStatusChart
+            title="Gender Data"
+            data={genderRatio ? genderRatio : []}
+          />
+        </div>
+        <div className="chart">
+          <WorkStatusChart
+            title="Department Data"
+            data={departmentData ? departmentData : []}
+          />
+        </div>
       </div>
     </>
   );

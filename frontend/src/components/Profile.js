@@ -4,22 +4,7 @@ import {
   useUpdateEmployeeByAdminMutation,
   useUpdateEmployeeMutation,
 } from "../services/employees";
-
-const WorkStatusOptions = [
-  { id: 1, value: "Work from Office" },
-  { id: 2, value: "Work from Home" },
-  { id: 3, value: "Half Leave" },
-  { id: 4, value: "Full Leave" },
-];
-
-const DepartmentOptions = [
-  { id: 1, value: "HR" },
-  { id: 2, value: "Account" },
-  { id: 3, value: "IT" },
-  { id: 4, value: "Maintainence" },
-  { id: 5, value: "Sales" },
-  { id: 6, value: "R&D" },
-];
+import { WorkStatuss, Departments } from "../shared/dropdowns";
 
 const Profile = () => {
   const data = useSelector((state) => state.employee.currentUser);
@@ -106,29 +91,19 @@ const Profile = () => {
     };
 
     if (data.roleId === 2) {
-      console.log(reqBodyAdmin);
       const res = await updateByAdmin(reqBodyAdmin);
       return;
     }
-    console.log(reqBody);
     const res = await updateSelf(reqBody);
-    // console.log(res);
   };
-
-  console.log({
-    ...commonData,
-    current: currentAddress,
-    permanent: PermanentAddress,
-  });
-  console.log(data);
-  console.log(currentAddress, PermanentAddress);
 
   return (
     <>
       <div>
+        <div className="text-2xl my-8">Update-Profile</div>
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="max-w-md mx-auto grid grid-cols-2 gap-4 "
+          className="max-w-2xl mx-auto grid grid-cols-3 gap-4 "
         >
           <div className="mb-4">
             <label
@@ -233,17 +208,6 @@ const Profile = () => {
             >
               Department
             </label>
-
-            {/* <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="department"
-              type="text"
-              name="department"
-              value={commonData.deptId}
-              disabled={true}
-
-              // required
-            /> */}
             <select
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="department"
@@ -254,7 +218,7 @@ const Profile = () => {
             >
               <option value="">Select Work Status</option>
 
-              {DepartmentOptions.map((option) => (
+              {Departments.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.value}
                 </option>
@@ -280,7 +244,7 @@ const Profile = () => {
             >
               <option value="">Select Work Status</option>
 
-              {WorkStatusOptions.map((option) => (
+              {WorkStatuss.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.value}
                 </option>
@@ -448,14 +412,12 @@ const Profile = () => {
             />
           </div>
 
-          <div className="flex justify-center">
-            <button
-              className="px-4 py-2 h-10 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              type="submit"
-            >
-              Submit
-            </button>
-          </div>
+          <button
+            className=" px-4 py-2 h-10 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+            type="submit"
+          >
+            Submit
+          </button>
         </form>
       </div>
     </>

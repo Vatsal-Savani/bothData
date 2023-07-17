@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+
+
 .App {
   text-align: center;
 }
@@ -26,6 +29,30 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.navLists:hover{
+  color: #9cdd93;
+  transition : 400ms;
+}
+
+.fontFamily{
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 900;
+}
+
+.chart{
+ /* border: 1px solid black; */
+ padding: 1.5rem;
+ margin: 0 2rem;
+ box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;}
+
+.allCharts{
+  height: 60vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes App-logo-spin {

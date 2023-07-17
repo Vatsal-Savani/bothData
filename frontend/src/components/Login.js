@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-// import { login } from "../apis/login";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCurrentUser, setLogin, setUserRole } from "../slices/employeeSlice";
 import { useLoginMutation } from "../services/employees";
 
@@ -22,13 +21,11 @@ const Login = () => {
 
     if (!res.isUser) {
       alert("invalid credentials ");
-      // setMessage("invalid credentials");
     }
 
     if (res.isUser) {
       dispatch(setLogin());
       dispatch(setUserRole(res.role));
-      // console.log(res.detailedData);
       dispatch(setCurrentUser(res.detailedData));
     }
 

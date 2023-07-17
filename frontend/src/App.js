@@ -1,21 +1,15 @@
 import "./App.css";
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Charts from "./components/Charts";
 import AuthModule from "./modules/AuthModule";
-import Login from "./pages/Login";
-import New from "./pages/New";
-import Register from "./pages/Register";
-import DashBoard from "./components/DashBoard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import EmployeeDashboard from "./pages/employees/EmployeeDashboard";
 import Profile from "./components/Profile";
 import Start from "./pages/Start";
 import Navbar from "./components/common/Navbar";
 import MainLayout from "./layouts/MainLayout";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 const router = createBrowserRouter([
   {

@@ -11,8 +11,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.employee.currentUser);
 
-  console.log(currentUser);
-
   const handleLogout = async () => {
     await logout();
     if (otherDetails.isError) {
@@ -25,7 +23,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav class="flex justify-between px-20 py-10 items-center bg-white">
+      <nav className="flex justify-between px-20 py-6 items-center bg-[#343638] border-b-2">
         <div
           style={{ cursor: "pointer" }}
           onClick={() => {
@@ -37,10 +35,10 @@ const Navbar = () => {
           <img src={logo} alt="" style={{ height: "4vh" }} />
         </div>
 
-        <div class="flex items-center">
-          <ul class="flex items-center space-x-6">
+        <div className="flex items-center">
+          <ul className="flex items-center space-x-6 text-white">
             <li
-              class="font-semibold text-gray-700"
+              className="font-semibold  px-5 navLists"
               style={{ cursor: "pointer" }}
               onClick={() => {
                 currentUser.roleId == 1
@@ -51,14 +49,14 @@ const Navbar = () => {
               Home
             </li>
             <li
-              class="font-semibold text-gray-700"
+              className="font-semibold px-5 navLists"
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/update")}
             >
               Profile
             </li>
             <li
-              class="font-semibold text-gray-700"
+              className="font-semibold px-5 navLists"
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/charts")}
             >
@@ -66,7 +64,7 @@ const Navbar = () => {
             </li>
 
             <li
-              class="font-semibold text-gray-700"
+              className="font-semibold px-5 navLists"
               onClick={() => handleLogout()}
               style={{ cursor: "pointer" }}
             >

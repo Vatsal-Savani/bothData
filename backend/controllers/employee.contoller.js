@@ -23,14 +23,18 @@ const checkDepartment = async (req, res) => {
 };
 
 const getAllEmployees = async (req, res) => {
-  const data = await Employees.findAll({
-    attributes: {
-      exclude: ["password"],
-    },
-    include: [Departments, WorkStatus, Role],
-  });
+  try {
+    const data = await Employees.findAll({
+      attributes: {
+        exclude: ["password"],
+      },
+      include: [Departments, WorkStatus, Role],
+    });
 
-  res.send(data);
+    res.send(data);
+  } catch (error) {
+    res.send(error);
+  }
 };
 
 const createEmployee = async (req, res) => {
@@ -58,15 +62,8 @@ const createEmployee = async (req, res) => {
   const data = await Employees.create(employeeData);
 
   const token = createToken(data.id);
-  const options = {
-    httpOnly: true,
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-  };
 
-  res
-    .status(200)
-    .cookie("token", token, options)
-    .send("Employee created successfully");
+  res.status(200).send("Employee created successfully");
 };
 
 const login = async (req, res) => {
@@ -178,7 +175,7 @@ const updateEmployee = async (req, res) => {
 
 const adminUpdateEmployee = async (req, res) => {
   const { current, permanent, id, ...employeedata } = req.body;
-  console.log(permanent, id);
+  console.log(id, employeedata);
 
   const data = await Employees.update(
     {

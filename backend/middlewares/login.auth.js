@@ -11,6 +11,8 @@ const isAuthorized = async (req, res, next) => {
 
   const id = verifyToken(token, "theBoys");
 
+  console.log(id);
+
   const { roleId } = await Employee.findOne({
     where: { id },
   });

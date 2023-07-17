@@ -8,35 +8,42 @@ import ModalDialog from "@mui/joy/ModalDialog";
 import Stack from "@mui/joy/Stack";
 import Add from "@mui/icons-material/Add";
 import Typography from "@mui/joy/Typography";
-import { registerEmployee } from "../../apis/registerEmployee";
-import { updateEmployeeByAdmin } from "../../apis/updateEmployeeByAdmin";
-import { useUpdateEmployeeByAdminMutation } from "../../services/employees";
+import {
+  useRegisterMutation,
+  useUpdateEmployeeByAdminMutation,
+} from "../../services/employees";
+import {
+  WorkStatuss,
+  Genders,
+  Departments,
+  Roles,
+} from "../../shared/dropdowns";
 
-const WorkStatusOptions = [
-  { id: 1, value: "Work from Home" },
-  { id: 2, value: "Work from Office" },
-  { id: 3, value: "Full Leave" },
-  { id: 4, value: "Half Leave" },
-];
+// const WorkStatusOptions = [
+//   { id: 1, value: "Work from Home" },
+//   { id: 2, value: "Work from Office" },
+//   { id: 3, value: "Full Leave" },
+//   { id: 4, value: "Half Leave" },
+// ];
 
-const DepartmentOptions = [
-  { id: 1, value: "HR" },
-  { id: 2, value: "Account" },
-  { id: 3, value: "IT" },
-  { id: 4, value: "Maintainence" },
-  { id: 5, value: "Sales" },
-  { id: 6, value: "R&D" },
-];
+// const DepartmentOptions = [
+//   { id: 1, value: "HR" },
+//   { id: 2, value: "Account" },
+//   { id: 3, value: "IT" },
+//   { id: 4, value: "Maintainence" },
+//   { id: 5, value: "Sales" },
+//   { id: 6, value: "R&D" },
+// ];
 
-const GenderOptions = [
-  { id: 1, value: "male" },
-  { id: 2, value: "female" },
-];
+// const GenderOptions = [
+//   { id: 1, value: "male" },
+//   { id: 2, value: "female" },
+// ];
 
-const RoleOptions = [
-  { id: 1, value: "Employee" },
-  { id: 2, value: "Admin" },
-];
+// const RoleOptions = [
+//   { id: 1, value: "Employee" },
+//   { id: 2, value: "Admin" },
+// ];
 
 const initialData = {
   firstName: "",
@@ -47,6 +54,8 @@ const initialData = {
   password: "",
   deptId: "",
   wstId: "",
+  roleId: "",
+  doj: "",
 };
 
 export default function Form({
@@ -57,7 +66,8 @@ export default function Form({
   formData,
   setFormData,
 }) {
-  const [updateByAdmin, otherstates] = useUpdateEmployeeByAdminMutation();
+  const [updateByAdmin, ...otherstates] = useUpdateEmployeeByAdminMutation();
+  const [registerUser, ...otherData] = useRegisterMutation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,18 +79,18 @@ export default function Form({
 
     if (action === "create") {
       try {
-        const response = await registerEmployee(formData);
+        const response = await registerUser(formData);
         console.log(response);
       } catch (error) {
         console.log(error);
       }
       setOpen(false);
+      setFormData(initialData);
       return;
     }
     formData.doj = new Date(formData.doj).toISOString();
     const response = await updateByAdmin(formData);
-    console.log(response);
-
+    setFormData(initialData);
     setOpen(false);
   };
 
@@ -104,7 +114,7 @@ export default function Form({
         <ModalDialog
           aria-labelledby="basic-modal-dialog-title"
           aria-describedby="basic-modal-dialog-description"
-          sx={{ maxWidth: 500 }}
+          sx={{ width: 1000 }}
         >
           <Typography id="basic-modal-dialog-title" component="h2">
             {action == "create" ? "Create New Employee" : "Edit Employee"}
@@ -116,8 +126,8 @@ export default function Form({
             Fill in the information of the Employee.
           </Typography>
           <form onSubmit={handleSubmit}>
-            <Stack spacing={2}>
-              <FormControl>
+            <Stack spacing={2} className="grid grid-cols-2 gap-4">
+              <FormControl className="mt-4">
                 <FormLabel>First Name</FormLabel>
                 <Input
                   name="firstName"
@@ -183,14 +193,14 @@ export default function Form({
                 <select
                   className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                   id="role"
-                  name="role"
-                  value={formData?.role}
+                  name="roleId"
+                  value={formData?.roleId}
                   onChange={handleChange}
                   required
                 >
                   <option value="">Select Role</option>
 
-                  {RoleOptions.map((option) => (
+                  {Roles.map((option) => (
                     <option key={option.id} value={option.id}>
                       {option.value}
                     </option>
@@ -234,7 +244,7 @@ export default function Form({
                 >
                   <option value="">Select Gender</option>
 
-                  {GenderOptions.map((option) => (
+                  {Genders.map((option) => (
                     <option key={option.id} value={option.value}>
                       {option.value}
                     </option>
@@ -259,7 +269,7 @@ export default function Form({
                 >
                   <option value="">Select Department</option>
 
-                  {DepartmentOptions.map((option) => (
+                  {Departments.map((option) => (
                     <option key={option.id} value={option.id}>
                       {option.value}
                     </option>
@@ -284,14 +294,18 @@ export default function Form({
                 >
                   <option value="">Select Work Status</option>
 
-                  {WorkStatusOptions.map((option) => (
+                  {WorkStatuss.map((option) => (
                     <option key={option.id} value={option.id}>
                       {option.value}
                     </option>
                   ))}
                 </select>
               </div>
-              <Button style={{ backgroundColor: "#096bde" }} type="submit">
+              <Button
+                style={{ backgroundColor: "#096bde", marginTop: "2.6rem" }}
+                type="submit"
+                className="h-[20px] w-[150px] mt-[40px]"
+              >
                 Submit
               </Button>
             </Stack>
